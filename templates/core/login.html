@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body class="join" style="background-image: url({% static 'background.jpg' %})">
+    <div class="jumbotron vertical-center">
+    <h1>Login<h1>
+    <form action="" method="POST" class="center_form">{% csrf_token %}
+      <table>
+        {{ login_form.as_table }}
+        <tr><td>
+          <input type="submit" class="btn btn-primary" value = "Login"/>
+        </td></tr>
+      </table>
+    </form>
+    <p class="login_text">If you don't already have a username and password,
+      join <a href="/join/">here</a></p>
+    </div>
+  </body>
+</html>

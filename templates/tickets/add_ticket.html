@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <h5> Add Ticket </h5>
+      <form method="POST">{%csrf_token%}
+        {{add_ticket.as_table}}
+        <br>
+        <button type="submit" class="btm btm-primary" name="Add Ticket">Add Ticket</button>
+        <a class="btn btn-primary" href='/tickets/'>Cancel</a>
+      </form>
+    </div>
+  </body>
+</html>

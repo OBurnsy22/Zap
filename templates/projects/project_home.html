@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <h5> Projects </h5>
+      <form>
+        <a class="btm btm-primary" href='/add_project/'>Add Project</a>
+      </form>
+      <div class="container">
+        <div class="jumbotron">
+          <table class="info_tables">
+            <tr class="info_tables">
+              <th>Project Name</th>
+              <th>Description</th>
+              <th></th>
+            </tr>
+            {% for items in rows %}
+            <tr class="info_tables">
+              {% for cells in items %}
+              <td class="info_tables">
+                {{ cells }}
+              </td>
+              {% endfor %}
+              <td class="info_tables">
+                <a class="btm btm-primary" href="/projects/details/{{ items.0 }}/">Details</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <div class="row">
+        <h5> User Profile </h5>
+      </div>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="jumbotron">
+            <table class="ticket_tables">
+              <tr class="ticket_tables">
+                <th>First Name</th>
+                <th>Last Name</th>
+              </tr>
+              <tr class="ticket_tables">
+                {% for items in rows %}
+                  {% for cells in items %}
+                    {% if forloop.counter0 == 0 or forloop.counter0 == 1 %}
+                    <td class="ticket_tables">{{ cells }}</td>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </tr>
+              <tr class="ticket_tables">
+                <th>Username</th>
+                <th>Email</th>
+              </tr>
+              <tr class="ticket_tables">
+                {% for items in rows %}
+                  {% for cells in items %}
+                    {% if forloop.counter0 == 2 or forloop.counter0 == 3 %}
+                      <td class="ticket_tables">{{ cells }}</td>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </tr>
+              <tr class="ticket_tables">
+                <th>Project</th>
+                <th>Role</th>
+              </tr>
+              <tr class="ticket_tables">
+                {% for items in rows %}
+                  {% for cells in items %}
+                    {% if forloop.counter0 == 4 or forloop.counter0 == 5 %}
+                      <td class="ticket_tables">{{ cells }}</td>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </tr>
+            </table>
+          </div>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

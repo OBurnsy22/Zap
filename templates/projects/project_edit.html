@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <h5> Edit Project </h5>
+      <form method="POST">{%csrf_token%}
+        {{edit_project.as_table}}
+        <br>
+        <button type="submit" class="btm btm-primary" name="Edit Project">Update Project</button>
+        <a class="btn btn-primary" href='/projects/'>Cancel</a>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <div class="row">
+        <h5> Project Details for '{{ project_name }}': </h5>
+      </div>
+      <a href="/projects/edit/{{ project_name }}">Edit</a>
+      <a href="/projects/delete/{{ project_name }}" onclick="return confirm('Are you sure?')" style="padding-left:1%;">Delete</a>
+      <br>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="jumbotron">
+            <p> Assigned Users: </p>
+            <table class="info_tables">
+              <tr class="info_tables">
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+              </tr>
+              {% for items in rows %}
+              <tr class="info_tables">
+                {% for cells in items %}
+                <td class="info_tables">
+                  {{ cells }}
+                </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          </div>
+          <div class="col">
+            <div class="jumbotron">
+            <p> Tickets: </p>
+            <table class="info_tables">
+              <tr class="info_tables">
+                <th>Title</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+              {% for items in tickets %}
+              <tr class="info_tables">
+                {% for cells in items %}
+                  {% if forloop.counter0 == 0 or forloop.counter0 == 2 or forloop.counter0 == 6 %}
+                  <td class="info_tables">
+                    {{ cells }}
+                  </td>
+                  {% endif %}
+                {% endfor %}
+                <td class="info_tables">
+                  <a class="btm btm-primary" href="/tickets/details/{{ items.0 }}">Details</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+</script>
+</html>

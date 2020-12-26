@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <div class="row">
+        <h5> Manage User Roles </h5>
+      </div>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <p> Change User Role: </p>
+            <form method="POST">{%csrf_token%}
+              <table>
+                {{edit_roles.as_table}}
+              </table>
+              <button type="submit" class="btm btm-primary" name="Edit Roles">Submit</button>
+            </form>
+          </div>
+          <!---->
+          <div class="col-sm-8">
+            <p> All Users: </p>
+            <div class="jumbotron">
+            <table class="info_tables">
+              <tr class="info_tables">
+                <th>Username</th>
+                <th>Role</th>
+                <th>Email</th>
+              </tr>
+              {% for items in rows %}
+              <tr class="info_tables">
+                {% for cells in items %}
+                  <td class="info_tables">
+                    {{ cells }}
+                  </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

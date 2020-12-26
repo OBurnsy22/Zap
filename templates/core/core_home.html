@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html land="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"> <!-- Chartis Stuff -->
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script> <!-- Chartis Stuff -->
+  </head>
+  <body>
+    {% include "core/navigation_vertical.html" %}
+    {% include "core/bootstrap.html" %}
+    <div class="page_body">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="container-fluid">
+            <div class="jumbotron">
+              <div align="center" style="text-align:center;">
+            <p> Tickets by Type: </p>
+            <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="col-lg-4">
+        <div class="container-fluid">
+          <div class="jumbotron">
+            <div align="center" style="text-align:center;">
+            <p> Tickets by Priority: </p>
+            <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-100"></div>
+      <div class="col-lg-4">
+        <div class="container-fluid">
+          <div class="jumbotron">
+            <div align="center">
+            <p> Tickets by Status:
+            <div class="ct-chart ct-perfect-fourth" id="chart3"></div>
+          </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+</div>
+  </body>
+  <script>
+    /* for tickets by priority */
+    if ({{ticket_type_total}} == 0){
+      new Chartist.Pie('#chart1', {
+        labels: ["No Tickets"],
+        series: [1]
+      }, {
+        donut: true,
+        chartPadding: 30,
+        labelOffset: 50,
+        labelDirection: 'explode',
+        width: '80%',
+        height: '80%'
+      });
+    } else {
+      new Chartist.Pie('#chart1', {
+        labels: ["Feature Request", "Bug/Error", "Comment"],
+        series: [{{ticket_feature_count}}, {{ticket_bug_count}}, {{ticket_comment_count}}]
+      }, {
+        donut: true,
+        chartPadding: 30,
+        labelOffset: 50,
+        labelDirection: 'explode',
+        width: '80%',
+        height: '80%'
+      });
+    }
+
+    /* for tickets by type*/
+    new Chartist.Bar('#chart2', {
+      labels: ["None", "Low", "Medium", "High"],
+      series: [{{ticket_none}}, {{ticket_low}}, {{ticket_medium}}, {{ticket_high}}]
+    }, {
+      distributeSeries: true,
+      width: '80%',
+      height: '80%'
+    });
+
+    /* for tickets by status*/
+    new Chartist.Bar('#chart3', {
+      labels: ["Open", "In Progress", "Resolved", "Closed"],
+      series: [{{ticket_open}}, {{ticket_in_progress}}, {{ticket_resolved}}, {{ticket_closed}}]
+    }, {
+      distributeSeries: true,
+      width: '80%',
+      height: '80%'
+    });
+  </script>
+</html>

@@ -73,26 +73,26 @@ def edit_ticket(request, name):
         if ticket_form.is_valid():
             ticket_obj = Ticket.objects.get(pk=name)
             #create a new ticket history object with every newly changed field
-            if ticket_obj.description != ticket_form.cleaned_data['description']:
-                ticketHistory(old_value=ticket_obj.description,
-                new_value=ticket_form.cleaned_data['description'],
-                project=ticket_obj.project, changed_property='Description').save()
-                ticket_obj.description = ticket_form.cleaned_data['description']
-            if ticket_obj.status != ticket_form.cleaned_data['status']:
-                ticketHistory(old_value=ticket_obj.status,
-                new_value=ticket_form.cleaned_data['status'],
-                project=ticket_obj.project, changed_property='Status').save()
-                ticket_obj.status = ticket_form.cleaned_data['status']
-            if ticket_obj.priority != ticket_form.cleaned_data['priority']:
-                ticketHistory(old_value=ticket_obj.priority,
-                new_value=ticket_form.cleaned_data['priority'],
-                project=ticket_obj.project, changed_property='Priority').save()
-                ticket_obj.priority = ticket_form.cleaned_data['priority']
-            if ticket_obj.type != ticket_form.cleaned_data['type']:
-                ticketHistory(old_value=ticket_obj.type,
-                new_value=ticket_form.cleaned_data['type'],
-                project=ticket_obj.project, changed_property='Type').save()
-                ticket_obj.type = ticket_form.cleaned_data['type']
+            #if ticket_obj.description != ticket_form.cleaned_data['description']:
+                #ticketHistory(old_value=ticket_obj.description,
+                #new_value=ticket_form.cleaned_data['description'],
+                #project=ticket_obj.project, changed_property='Description').save()
+            ticket_obj.description = ticket_form.cleaned_data['description']
+            #if ticket_obj.status != ticket_form.cleaned_data['status']:
+                #ticketHistory(old_value=ticket_obj.status,
+                #new_value=ticket_form.cleaned_data['status'],
+                #project=ticket_obj.project, changed_property='Status').save()
+            ticket_obj.status = ticket_form.cleaned_data['status']
+            #if ticket_obj.priority != ticket_form.cleaned_data['priority']:
+                #ticketHistory(old_value=ticket_obj.priority,
+                #new_value=ticket_form.cleaned_data['priority'],
+                #project=ticket_obj.project, changed_property='Priority').save()
+            ticket_obj.priority = ticket_form.cleaned_data['priority']
+            #if ticket_obj.type != ticket_form.cleaned_data['type']:
+                #ticketHistory(old_value=ticket_obj.type,
+                #new_value=ticket_form.cleaned_data['type'],
+                #project=ticket_obj.project, changed_property='Type').save()
+            ticket_obj.type = ticket_form.cleaned_data['type']
             ticket_obj.save()
             #creat a ticket history object for history table
             return redirect('/tickets/')

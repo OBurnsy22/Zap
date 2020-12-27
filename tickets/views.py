@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
-from tickets.models import Ticket, ticketHistory
-from tickets.forms import ticketForm, editTicket
+from tickets.models import Ticket, ticketHistory, File
+from tickets.forms import ticketForm, editTicket, fileUpload
 from django.contrib.auth.decorators import login_required
 from projects.models import Project
 from core.models import User
+from operator import itemgetter
+import enum
+#files
+from django.core.files.storage import FileSystemStorage
 #rest stuff
 from rest_framework import viewsets
 from rest_framework import permissions
 from tickets.serializers import TicketSerializer, UserSerializer
 from django.contrib.auth.models import User as django_user
-from operator import itemgetter
-import enum
 # Create your views here.
 
 @login_required(login_url='/')
@@ -37,8 +39,24 @@ def add_ticket(request):
     return render(request, 'tickets/add_ticket.html', context=page_data)
 
 def details_ticket(request, name):
-    page_data={"rows":[], "ticket_name":" "}
+    breakpoint()
+    page_data={"rows":[], "ticket_name":" ", "file_upload":fileUpload}
     ticket_obj = Ticket.objects.get(pk=name)
+    #user is uploading ifle
+    if request.method == "POST" and "Add File" in request.POST:
+        uploadForm = fileUpload(request.POST, request.FILES)
+        if(uploadForm.is_valid()):
+            #get the file
+            uploaded_file = request.FILES['file']
+            #save the file
+            fs = FileSystemStorage()
+            fs.save(uploaded_file.name, uploaded_file)
+            #create File objects
+            File(title=uploadForm.cleaned_data['title'],
+            file=uploaded_file,
+            ticket = ticket_obj).save()
+        else:
+            print(uploadForm.errors)
     row=[]
     row.append(ticket_obj.description)
     row.append(ticket_obj.project.name)

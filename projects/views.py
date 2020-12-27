@@ -11,6 +11,7 @@ from rest_framework import permissions
 from projects.serializers import ProjectSerializer, UserSerializer
 from django.contrib.auth.models import User as django_user
 
+
 # Create your views here.
 @login_required(login_url='/')
 def project_home(request):

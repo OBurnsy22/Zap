@@ -19,6 +19,9 @@ from core import views as core_views
 from projects import views as project_views
 from tickets import views as ticket_views
 from rest_framework import routers
+#for file storage
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 router.register(r'projects', project_views.ProjectViewSet)
@@ -50,3 +53,6 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api-auth/v1/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

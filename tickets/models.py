@@ -12,6 +12,7 @@ class Ticket(models.Model):
     type = models.CharField(max_length=20)
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
+#not working, fix later
 class ticketHistory(models.Model):
     changed_property = models.CharField(max_length=30),
     old_value = models.CharField(max_length=30),
@@ -19,13 +20,7 @@ class ticketHistory(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True),
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
-
-
-
-
-
-#For printing tickets related to a particular project, assign
-#project a tickets is related to under the Ticket foreign key field,
-#then when I need to populate a table with tickets for a project, just
-#search through all tickets in database, cherrypicking the ones with the
-#corresponding project you are referring to
+class File(models.Model):
+    title = models.CharField(max_length=20)
+    file = models.FileField()
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, null=True)

@@ -63,7 +63,16 @@
             </table>
           </div>
           </div>
-          <div class="col"></div>
+          <div class="col">
+            <div class="jumbotron">
+              <form method="POST" enctype="multipart/form-data">{%csrf_token%}
+                <table>
+                  {{ file_upload.as_table }}
+                  <button type="submit" class="btm btm-primary" name="Add File">Add File</button>
+                </table>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

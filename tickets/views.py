@@ -9,6 +9,8 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from tickets.serializers import TicketSerializer, UserSerializer
 from django.contrib.auth.models import User as django_user
+from operator import itemgetter
+import enum
 # Create your views here.
 
 @login_required(login_url='/')
@@ -123,6 +125,39 @@ def retrieve_tickets(request, project_obj, page_data):
             row.append(objects.date)
             page_data.get("tickets").append(row)
     return
+
+def populate_page_data_by_priority(request, page_data):
+    class priority(enum.Enum):
+        High = 3
+        Medium = 2
+        Low = 1
+        none = 0
+    ticket_objects = Ticket.objects.all()
+    for prio in priority:
+        for tickets in ticket_objects:
+            if tickets.priority == prio.name or (prio.name == "none" and tickets.priority == "None"):
+                row=[]
+                row.append(tickets.title)
+                row.append(tickets.description)
+                row.append(tickets.status)
+                row.append(tickets.project)
+                row.append(tickets.priority)
+                row.append(tickets.type)
+                row.append(tickets.date)
+                page_data.get("rows").append(row)
+    return
+
+def sort_priority(request):
+    page_data={"rows":[], "add_ticket":ticketForm}
+    populate_page_data_by_priority(request, page_data)
+    return render(request, 'tickets/ticket_home.html', context=page_data)
+
+def sort_date(request):
+    page_data={"rows":[], "add_ticket":ticketForm}
+    populate_page_data(request, page_data)
+    rows_of_tickets=page_data.get("rows")
+    page_data["rows"]=sorted(rows_of_tickets, key=itemgetter(6))
+    return render(request, 'tickets/ticket_home.html', context=page_data)
 
 def retrieve_ticket_data(page_data):
     tickets = Ticket.objects.all()

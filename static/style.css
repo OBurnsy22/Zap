@@ -6,6 +6,25 @@ form.center_form{
   display: inline-block;
 }
 
+span.sort_options_header{
+  float:right;
+  display: inline-block;
+  padding-right: 9%;
+}
+
+span.sort_options_right{
+  float: right;
+  display: inline-block;
+  padding-right: 6%;
+}
+
+span.sort_options_left{
+  float: right;
+  display: inline-block;
+  padding-right: 1%;
+}
+
+
 div.jumbotron{
 padding: 1rem 1rem;
 background-color: #FFEBCD;

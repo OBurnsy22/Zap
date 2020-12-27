@@ -10,9 +10,12 @@
     {% include "core/navigation_vertical.html" %}
     {% include "core/bootstrap.html" %}
     <div class="page_body">
-      <h5> Tickets </h5>
+      <h5 style="display: inline-block;"> Tickets </h5>
+      <span class="sort_options_header"> Sort by: </span>
       <form>
         <a class="btm btm-primary" href='/add_ticket/'>Add Ticket</a>
+        <span class="sort_options_right"><a class="btm btm-primary" href='/tickets_sort_priority/'>Priority</a></span>
+        <span class="sort_options_left"><a class="btm btm-primary" href='/tickets_sort_date/'>Date</a></span>
       </form>
       <div class="container">
         <div class="jumbotron">

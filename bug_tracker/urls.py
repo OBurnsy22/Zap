@@ -42,6 +42,8 @@ urlpatterns = [
     path('tickets/details/<str:name>/', ticket_views.details_ticket, name="ticket_details"),
     path('tickets/edit/<str:name>/', ticket_views.edit_ticket, name="edit_ticket"),
     path('tickets/delete/<str:name>/', ticket_views.delete_ticket, name="delete_ticket"),
+    path('tickets_sort_priority/', ticket_views.sort_priority, name="tickets_sort_priority"),
+    path('tickets_sort_date/', ticket_views.sort_date, name="tickets_sort_date"),
     path('manage_roles/', core_views.manage_roles, name='manage_roles'),
     path('manage_projects/', core_views.manage_projects, name='manage_projects'),
     #rest stuff

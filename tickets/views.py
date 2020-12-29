@@ -39,7 +39,6 @@ def add_ticket(request):
     return render(request, 'tickets/add_ticket.html', context=page_data)
 
 def details_ticket(request, name):
-    breakpoint()
     page_data={"rows":[], "ticket_name":" ", "file_upload":fileUpload}
     ticket_obj = Ticket.objects.get(pk=name)
     #user is uploading ifle

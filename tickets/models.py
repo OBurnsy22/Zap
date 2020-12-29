@@ -1,6 +1,7 @@
 from django.db import models
 from projects.models import Project
 from core.models import User
+from django.core.files.storage import FileSystemStorage
 
 # Create your models here.
 class Ticket(models.Model):

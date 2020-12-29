@@ -125,7 +125,14 @@ def edit_ticket(request, name):
     return render(request, 'tickets/ticket_edit.html', context=page_data)
 
 def delete_ticket(request, name):
+    #retireve ticket object that will be deleted
     ticket_object = Ticket.objects.get(pk=name)
+    #delete all ticketFiles associated with this ticket
+    file_objects = ticketFile.objects.all()
+    for objects in file_objects:
+        if objects.ticket == ticket_object:
+            objects.delete()
+    #delete ticket
     ticket_object.delete()
     return redirect("/tickets/")
 

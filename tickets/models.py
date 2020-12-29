@@ -20,7 +20,7 @@ class ticketHistory(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True),
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
 
-class File(models.Model):
+class ticketFile(models.Model):
     title = models.CharField(max_length=20)
     file = models.FileField()
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, null=True)

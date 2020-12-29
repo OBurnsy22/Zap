@@ -1,5 +1,5 @@
 from django import forms
-from tickets.models import Ticket, File
+from tickets.models import Ticket
 from projects.models import Project
 
 #ticket type choices
@@ -39,7 +39,6 @@ class editTicket(forms.Form):
     priority = forms.CharField(max_length=15, widget=forms.Select(choices=priority_choices))
     type = forms.CharField(max_length=15, widget=forms.Select(choices=type_choices))
 
-class fileUpload(forms.ModelForm):
-    class Meta():
-        model = File
-        fields = ['title', 'file']
+class fileUpload(forms.Form):
+    title = forms.CharField(max_length=20)
+    file = forms.FileField()

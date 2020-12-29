@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from tickets.models import Ticket, ticketHistory, File
+from tickets.models import Ticket, ticketHistory, ticketFile
 from tickets.forms import ticketForm, editTicket, fileUpload
 from django.contrib.auth.decorators import login_required
 from projects.models import Project
@@ -52,11 +52,12 @@ def details_ticket(request, name):
             fs = FileSystemStorage()
             fs.save(uploaded_file.name, uploaded_file)
             #create File objects
-            File(title=uploadForm.cleaned_data['title'],
+            ticketFile(title=uploadForm.cleaned_data['title'],
             file=uploaded_file,
             ticket = ticket_obj).save()
         else:
             print(uploadForm.errors)
+    #get info about ticket
     row=[]
     row.append(ticket_obj.description)
     row.append(ticket_obj.project.name)

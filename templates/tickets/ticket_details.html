@@ -77,7 +77,25 @@
         <div class="row">
           <div class="col">
             <div class="jumbotron">
-              tron
+              <p style="text-align:center;">Files for This Ticket</p>
+              <table class="info_tables">
+                <tr class="info_tables">
+                  <th>Description</th>
+                  <th>File Title</th>
+                  <th></th>
+                </tr>
+                  {% for items in uploaded_files %}
+                    <tr class="info_tables">
+                    {% for cells in items %}
+                      {% if forloop.counter0 == 2%}
+                        <td class="info_tables"> <a href="{{ cells.url }}" target="_blank">View</a> </td>
+                      {% else %}
+                        <td class="info_tables">{{ cells }}</td>
+                      {% endif %}
+                    {% endfor %}
+                    </tr>
+                  {% endfor %}
+              </table>
             </div>
           </div>
           <div class="col"></div>

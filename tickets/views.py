@@ -39,7 +39,7 @@ def add_ticket(request):
     return render(request, 'tickets/add_ticket.html', context=page_data)
 
 def details_ticket(request, name):
-    page_data={"rows":[], "ticket_name":" ", "file_upload":fileUpload}
+    page_data={"rows":[], "ticket_name":" ", "file_upload":fileUpload, "uploaded_files":[]}
     ticket_obj = Ticket.objects.get(pk=name)
     #user is uploading ifle
     if request.method == "POST" and "Add File" in request.POST:
@@ -51,8 +51,8 @@ def details_ticket(request, name):
             fs = FileSystemStorage()
             fs.save(uploaded_file.name, uploaded_file)
             #create File objects
-            ticketFile(title=uploadForm.cleaned_data['title'],
-            file=uploaded_file,
+            ticketFile(description=uploadForm.cleaned_data['description'],
+            file=uploaded_file, file_title=uploaded_file.name,
             ticket = ticket_obj).save()
         else:
             print(uploadForm.errors)
@@ -66,6 +66,15 @@ def details_ticket(request, name):
     row.append(ticket_obj.date)
     page_data.get("rows").append(row)
     page_data["ticket_name"]=ticket_obj.title
+    #retrieve all uploaded file associated with this ticket
+    ticket_files = ticketFile.objects.all()
+    for objects in ticket_files:
+        if objects.ticket == ticket_obj:
+            row=[]
+            row.append(objects.description)
+            row.append(objects.file_title)
+            row.append(objects.file)
+            page_data.get("uploaded_files").append(row)
     return render(request, 'tickets/ticket_details.html', context=page_data)
 
 def populate_page_data(request, page_data):

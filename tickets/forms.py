@@ -40,5 +40,5 @@ class editTicket(forms.Form):
     type = forms.CharField(max_length=15, widget=forms.Select(choices=type_choices))
 
 class fileUpload(forms.Form):
-    title = forms.CharField(max_length=20)
+    description = forms.CharField(max_length=20)
     file = forms.FileField()

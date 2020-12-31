@@ -17,16 +17,12 @@
           <div class="container-fluid">
             <div class="jumbotron">
               <div align="center" style="text-align:center;">
-            <p> Tickets by Type: </p>
-            {% if ticket_type_total == 0 %}
-              <p class="no_data_tag"> No Data </p>
-            {% else %}
+              <p> Tickets by Type: </p>
               <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
-            {% endif %}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
       <div class="col-lg-4">
         <div class="container-fluid">
           <div class="jumbotron">
@@ -53,8 +49,8 @@
 </div>
   </body>
   <script>
-    /* for tickets by priority */
-    var data = {
+    /* for tickets by type */
+    /*var data = {
       labels: [],
       series: []
     }
@@ -78,7 +74,15 @@
       labelDirection: 'explode',
       width: '80%',
       height: '80%'
-    } )
+    } )*/
+    new Chartist.Bar('#chart1', {
+      labels: ["Feature Request", "Bug/Error", "Comment" ],
+      series: [{{ticket_feature_count}}, {{ticket_bug_count}}, {{ticket_comment_count}}]
+    }, {
+      distributeSeries: true,
+      width: '80%',
+      height: '80%'
+    });
 
     /* for tickets by type*/
     new Chartist.Bar('#chart2', {

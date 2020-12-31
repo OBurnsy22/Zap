@@ -4,7 +4,7 @@ from projects.models import Project
 
 #ticket type choices
 type_choices = [
-    ('Feature Request', 'Feature Fequest'),
+    ('Feature Request', 'Feature Request'),
     ('Bug/Error', 'Bug/Error'),
     ('Comment', 'Comment')
 ]

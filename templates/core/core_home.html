@@ -18,7 +18,11 @@
             <div class="jumbotron">
               <div align="center" style="text-align:center;">
             <p> Tickets by Type: </p>
-            <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+            {% if ticket_type_total == 0 %}
+              <p class="no_data_tag"> No Data </p>
+            {% else %}
+              <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+            {% endif %}
         </div>
       </div>
     </div>
@@ -50,31 +54,31 @@
   </body>
   <script>
     /* for tickets by priority */
-    if ({{ticket_type_total}} == 0){
-      new Chartist.Pie('#chart1', {
-        labels: ["No Tickets"],
-        series: [1]
-      }, {
-        donut: true,
-        chartPadding: 30,
-        labelOffset: 50,
-        labelDirection: 'explode',
-        width: '80%',
-        height: '80%'
-      });
-    } else {
-      new Chartist.Pie('#chart1', {
-        labels: ["Feature Request", "Bug/Error", "Comment"],
-        series: [{{ticket_feature_count}}, {{ticket_bug_count}}, {{ticket_comment_count}}]
-      }, {
-        donut: true,
-        chartPadding: 30,
-        labelOffset: 50,
-        labelDirection: 'explode',
-        width: '80%',
-        height: '80%'
-      });
+    var data = {
+      labels: [],
+      series: []
     }
+
+    var temp_labels = []
+    {% for items in ticket_types %}
+      temp_labels.push('{{items}}')
+    {% endfor %}
+    data.labels = temp_labels
+
+    var temp_series = []
+    {% for items in ticket_count %}
+      temp_series.push({{items}})
+    {% endfor %}
+    data.series = temp_series
+
+    new Chartist.Pie('#chart1', data, {
+      donut: true,
+      chartPadding: 30,
+      labelOffset: 50,
+      labelDirection: 'explode',
+      width: '80%',
+      height: '80%'
+    } )
 
     /* for tickets by type*/
     new Chartist.Bar('#chart2', {

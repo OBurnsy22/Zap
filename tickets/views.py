@@ -198,13 +198,24 @@ def retrieve_ticket_data(page_data):
     feature, bug, comment = 0, 0, 0
     none, low, medium, high = 0, 0, 0, 0
     open, in_progress, closed, resolved = 0, 0, 0, 0
+    ticket_types = []
+    ticket_count = [0] * 3
     for objects in tickets:
         #record ticket type
         if(objects.type == "Feature Request"):
+            if(objects.type not in ticket_types):
+                ticket_types.append("Feature Request")
+                ticket_count[0] += 1
             feature+=1
         elif(objects.type == "Bug/Error"):
+            if(objects.type not in ticket_types):
+                ticket_types.append("Bug/Error")
+                ticket_count[1] += 1
             bug+=1
         else:
+            if(objects.type not in ticket_types):
+                ticket_types.append("Comment")
+                ticket_count[2] += 1
             comment+=1
         #record ticket priority
         if(objects.priority == "None"):
@@ -236,6 +247,8 @@ def retrieve_ticket_data(page_data):
     page_data["ticket_closed"] = closed
     page_data["ticket_resolved"] = resolved
     page_data["ticket_type_total"] = feature + bug + comment
+    page_data["ticket_types"] = ticket_types
+    page_data["ticket_count"] = ticket_count
 
 class TicketViewSet(viewsets.ModelViewSet):
     """

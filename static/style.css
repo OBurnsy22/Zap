@@ -44,6 +44,10 @@ div.vertical-center{
   max-width: 350px;
 }
 
+p.no_data_tag{
+  font-size: 60%;
+}
+
 div.vertical-center-join{
   width: 25%;
   margin-left: auto;

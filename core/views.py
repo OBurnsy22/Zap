@@ -16,7 +16,7 @@ def core_home(request):
     page_data={"ticket_feature_count":0, "ticket_bug_count":0, "ticket_comment_count":0,
     "ticket_low":0, "ticket_medium":0, "ticket_high":0, "ticket_none":0,
     "ticket_open":0, "ticket_in_progress":0, "ticket_closed":0, "ticket_resolved":0,
-    "ticket_type_total":0}
+    "ticket_type_total":0, "ticket_types":[], "ticket_count":[]}
     retrieve_ticket_data(page_data)
     return render(request, 'core/core_home.html', context=page_data)
 

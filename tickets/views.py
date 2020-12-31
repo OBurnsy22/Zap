@@ -39,7 +39,8 @@ def add_ticket(request):
     return render(request, 'tickets/add_ticket.html', context=page_data)
 
 def details_ticket(request, name):
-    page_data={"rows":[], "ticket_name":" ", "file_upload":fileUpload, "uploaded_files":[]}
+    page_data={"rows":[], "ticket_name":" ", "file_upload":fileUpload,
+    "uploaded_files":[], "ticket_changes":[]}
     ticket_obj = Ticket.objects.get(pk=name)
     #user is uploading ifle
     if request.method == "POST" and "Add File" in request.POST:
@@ -75,6 +76,16 @@ def details_ticket(request, name):
             row.append(objects.file_title)
             row.append(objects.file)
             page_data.get("uploaded_files").append(row)
+    #retrieve all ticket history objects for this ticket
+    ticket_history = ticketHistory.objects.all()
+    for objects in ticket_history:
+        if objects.ticket == ticket_obj:
+            row=[]
+            row.append(objects.changed_property)
+            row.append(objects.old_value)
+            row.append(objects.new_value)
+            row.append(objects.date)
+            page_data.get("ticket_changes").append(row)
     return render(request, 'tickets/ticket_details.html', context=page_data)
 
 def populate_page_data(request, page_data):
@@ -93,8 +104,8 @@ def populate_page_data(request, page_data):
 
 def edit_ticket(request, name):
     #this is an admin and project manager only page, check role of user first
-    project_obj = Project.objects.get(pk=name)
     user_obj = User.objects.get(pk=request.user.username)
+    ticket_obj = Ticket.objects.get(pk=name)
     if((user_obj.role != "Admin" and user_obj.role != "Project Manager" and user_obj.role != "Developer")):
         return redirect('/core/')
     page_data={"rows":[], "edit_ticket": editTicket}
@@ -102,26 +113,27 @@ def edit_ticket(request, name):
         ticket_form = editTicket(request.POST)
         if ticket_form.is_valid():
             #create a new ticket history object with every newly changed field
-            #if ticket_obj.description != ticket_form.cleaned_data['description']:
-                #ticketHistory(old_value=ticket_obj.description,
-                #new_value=ticket_form.cleaned_data['description'],
-                #project=ticket_obj.project, changed_property='Description').save()
-            ticket_obj.description = ticket_form.cleaned_data['description']
-            #if ticket_obj.status != ticket_form.cleaned_data['status']:
-                #ticketHistory(old_value=ticket_obj.status,
-                #new_value=ticket_form.cleaned_data['status'],
-                #project=ticket_obj.project, changed_property='Status').save()
-            ticket_obj.status = ticket_form.cleaned_data['status']
-            #if ticket_obj.priority != ticket_form.cleaned_data['priority']:
-                #ticketHistory(old_value=ticket_obj.priority,
-                #new_value=ticket_form.cleaned_data['priority'],
-                #project=ticket_obj.project, changed_property='Priority').save()
-            ticket_obj.priority = ticket_form.cleaned_data['priority']
-            #if ticket_obj.type != ticket_form.cleaned_data['type']:
-                #ticketHistory(old_value=ticket_obj.type,
-                #new_value=ticket_form.cleaned_data['type'],
-                #project=ticket_obj.project, changed_property='Type').save()
-            ticket_obj.type = ticket_form.cleaned_data['type']
+            if ticket_obj.description != ticket_form.cleaned_data['description']:
+                ticketHistory(changed_property='Description',
+                old_value=ticket_obj.description,
+                new_value=ticket_form.cleaned_data['description'],
+                ticket=ticket_obj).save()
+                ticket_obj.description = ticket_form.cleaned_data['description']
+            if ticket_obj.status != ticket_form.cleaned_data['status']:
+                ticketHistory(old_value=ticket_obj.status,
+                new_value=ticket_form.cleaned_data['status'],
+                ticket=ticket_obj, changed_property='Status').save()
+                ticket_obj.status = ticket_form.cleaned_data['status']
+            if ticket_obj.priority != ticket_form.cleaned_data['priority']:
+                ticketHistory(old_value=ticket_obj.priority,
+                new_value=ticket_form.cleaned_data['priority'],
+                ticket=ticket_obj, changed_property='Priority').save()
+                ticket_obj.priority = ticket_form.cleaned_data['priority']
+            if ticket_obj.type != ticket_form.cleaned_data['type']:
+                ticketHistory(old_value=ticket_obj.type,
+                new_value=ticket_form.cleaned_data['type'],
+                ticket=ticket_obj, changed_property='Type').save()
+                ticket_obj.type = ticket_form.cleaned_data['type']
             ticket_obj.save()
             #creat a ticket history object for history table
             return redirect('/tickets/')
@@ -139,6 +151,11 @@ def delete_ticket(request, name):
     #delete all ticketFiles associated with this ticket
     file_objects = ticketFile.objects.all()
     for objects in file_objects:
+        if objects.ticket == ticket_object:
+            objects.delete()
+    #delete all ticket history objects associated with this ticket
+    history_objects = ticketHistory.objects.all()
+    for objects in history_objects:
         if objects.ticket == ticket_object:
             objects.delete()
     #delete ticket

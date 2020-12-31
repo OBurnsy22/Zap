@@ -77,6 +77,26 @@
         <div class="row">
           <div class="col">
             <div class="jumbotron">
+              <p style="text-align:center;">Ticket History</p>
+              <table class="info_tables">
+                <tr class="info_tables">
+                  <th>Field</th>
+                  <th>Old Val</th>
+                  <th>New Val</th>
+                  <th>Date Changed</th>
+                </tr>
+                {% for items in ticket_changes %}
+                <tr class="info_tables">
+                  {% for cells in items %}
+                    <td class="info_tables">{{ cells }}</td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+          <div class="col">
+            <div class="jumbotron">
               <p style="text-align:center;">Files for This Ticket</p>
               <table class="info_tables">
                 <tr class="info_tables">
@@ -98,7 +118,6 @@
               </table>
             </div>
           </div>
-          <div class="col"></div>
         </div>
       </div>
     </div>

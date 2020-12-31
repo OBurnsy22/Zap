@@ -15,11 +15,11 @@ class Ticket(models.Model):
 
 #not working, fix later
 class ticketHistory(models.Model):
-    changed_property = models.CharField(max_length=30),
-    old_value = models.CharField(max_length=30),
-    new_value = models.CharField(max_length=30),
-    date = models.DateTimeField(auto_now_add=True, blank=True),
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    changed_property = models.CharField(max_length=30)
+    old_value = models.CharField(max_length=30)
+    new_value = models.CharField(max_length=30)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, null=True)
 
 class ticketFile(models.Model):
     description = models.CharField(max_length=30)

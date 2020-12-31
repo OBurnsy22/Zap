@@ -40,6 +40,8 @@ div.vertical-center{
   margin-right: auto;
   margin-top: 10%;
   margin-bottom: auto;
+  min-width: 250px;
+  max-width: 350px;
 }
 
 div.vertical-center-join{
@@ -133,6 +135,13 @@ table.info_tables{
   border-right: none;
   font-size: 65%;
 }
+
+table.login_table{
+  border: none;
+  width: 80%;
+  font-size: 50%;
+}
+
 
 td.info_tables{
   border: 1px solid grey;

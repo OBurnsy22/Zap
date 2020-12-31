@@ -93,14 +93,14 @@ def populate_page_data(request, page_data):
 
 def edit_ticket(request, name):
     #this is an admin and project manager only page, check role of user first
+    project_obj = Project.objects.get(pk=name)
     user_obj = User.objects.get(pk=request.user.username)
-    if(user_obj.role != "Admin" and user_obj.role != "Project Manager" and user.obj.role != "Developer"):
+    if((user_obj.role != "Admin" and user_obj.role != "Project Manager" and user_obj.role != "Developer")):
         return redirect('/core/')
     page_data={"rows":[], "edit_ticket": editTicket}
     if request.method == "POST" and "Edit Ticket" in request.POST:
         ticket_form = editTicket(request.POST)
         if ticket_form.is_valid():
-            ticket_obj = Ticket.objects.get(pk=name)
             #create a new ticket history object with every newly changed field
             #if ticket_obj.description != ticket_form.cleaned_data['description']:
                 #ticketHistory(old_value=ticket_obj.description,

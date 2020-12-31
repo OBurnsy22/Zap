@@ -10,12 +10,10 @@
     <div class="jumbotron vertical-center-join">
     <h1>Join<h1>
     <form action="/join/" method="POST" class="center_form">{% csrf_token %}
-      <table>
+      <table class="join_table">
         {{ join_form.as_table }}
-        <tr><td>
-          <input type="submit" class="btn btn-primary" value = "Join"/>
-        </td></tr>
       </table>
+      <input type="submit" class="btn btn-primary" value = "Join"/>
     </form>
   </div>
   </body>

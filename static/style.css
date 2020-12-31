@@ -146,6 +146,12 @@ table.login_table{
   font-size: 50%;
 }
 
+table.join_table{
+  border: none;
+  width: 80%;
+  font-size: 60%;
+}
+
 
 td.info_tables{
   border: 1px solid grey;

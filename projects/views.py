@@ -48,14 +48,14 @@ def details_project(request, name):
 
 def edit_project(request, name):
     #this is an admin and project manager only page, check role of user first
+    project_obj = Project.objects.get(pk=name)
     user_obj = User.objects.get(pk=request.user.username)
-    if(user_obj.role != "Admin" and user_obj.role != "Project Manager"):
+    if((user_obj.role != "Admin" and user_obj.role != "Project Manager") or (user_obj.role == "Project Manager" and user_obj.project != project_obj)):
         return redirect('/core/')
     page_data={"rows":[], "edit_project": editProject}
     if request.method == "POST" and "Edit Project" in request.POST:
         project_form = editProject(request.POST)
         if project_form.is_valid():
-            project_obj = Project.objects.get(pk=name)
             project_obj.description = project_form.cleaned_data['description']
             project_obj.save()
             return redirect('/projects/')
